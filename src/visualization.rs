@@ -2,6 +2,7 @@ use alloc::string::String;
 use crate::common::{AgvPosition, HeaderId, Timestamp, Velocity};
 
 /// AGV position and/or velocity for visualization purposes. Can be published at a higher rate if wanted. Since bandwidth may be expensive depening on the update rate for this topic, all fields are optional.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),

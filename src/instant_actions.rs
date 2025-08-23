@@ -4,6 +4,7 @@ use crate::action::Action;
 use crate::common::{HeaderId, Timestamp};
 
 /// Instant actions that the AGV is to execute as soon as they arrive.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),

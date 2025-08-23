@@ -5,6 +5,7 @@ use crate::action::Action;
 use crate::common::{HeaderId, NodePosition, Timestamp, Trajectory};
 
 /// An order to be communicated from master control to the AGV.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -33,6 +34,7 @@ pub struct Order {
     pub edges: Vec<Edge>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -53,6 +55,7 @@ pub struct Node {
     pub actions: Vec<Action>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -95,7 +98,7 @@ pub struct Edge {
     pub actions: Vec<Action>
 }
 
-#[derive(Default)]
+#[derive(Default, Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),

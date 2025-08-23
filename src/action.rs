@@ -3,8 +3,10 @@ use alloc::string::String;
 use alloc::vec::Vec;
 
 /// Node Action Object
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -18,12 +20,14 @@ pub struct Action {
     ///  Regulates if the action is allowed to be executed during movement and/or parallel to other actions.
     pub blocking_type: BlockingType,
     ///  Array of actionParameter objects for the indicated action e.g. deviceId, loadId, external triggers.
-    pub action_parameters: Vec<ActionParameter>
+    pub action_parameters: Vec<ActionParameter>,
 }
 
 /// Regulates if the action is allowed to be executed during movement and/or parallel to other actions.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -33,12 +37,14 @@ pub enum BlockingType {
     /// Action can happen simultaneously with others, but not while moving.
     Soft,
     /// No other actions can be performed while this action is running.
-    Hard
+    Hard,
 }
 
 /// ActionParameter Object
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -47,11 +53,13 @@ pub struct ActionParameter {
     pub key: String,
     ///  The value of the action parameter. For example: 103.2, "left", true, [ 1, 2, 3].
     #[cfg_attr(feature = "serde", serde(deserialize_with = "deserialize_value"))]
-    pub value: ActionParameterValue
+    pub value: ActionParameterValue,
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(untagged)
 )]
@@ -71,7 +79,7 @@ where
 {
     struct Value;
 
-    impl <'de> serde::de::Visitor<'de> for Value {
+    impl<'de> serde::de::Visitor<'de> for Value {
         type Value = ActionParameterValue;
 
         fn expecting(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -130,7 +138,10 @@ where
             self.visit_string(value.to_owned())
         }
 
-        fn visit_borrowed_str<E: serde::de::Error>(self, value: &'de str) -> Result<Self::Value, E> {
+        fn visit_borrowed_str<E: serde::de::Error>(
+            self,
+            value: &'de str,
+        ) -> Result<Self::Value, E> {
             self.visit_string(value.to_owned())
         }
 
@@ -149,15 +160,14 @@ where
 #[cfg(test)]
 #[allow(non_snake_case)]
 mod tests {
+    use super::{ActionParameter, ActionParameterValue, BlockingType};
     use alloc::string::String;
-    use super::{ActionParameter, ActionParameterValue};
     use googletest::prelude::*;
     use rstest::rstest;
 
     #[cfg(feature = "serde")]
     #[rstest]
     fn test_serde_ActionParameter_with_null_value() {
-
         let parameter = ActionParameter {
             key: String::from("my-null"),
             value: ActionParameterValue::Null,
@@ -170,18 +180,18 @@ mod tests {
 
         assert_that!(to, ok(eq(json)));
 
-        assert_that!(from, ok(matches_pattern!(
-            ActionParameter {
+        assert_that!(
+            from,
+            ok(matches_pattern!(ActionParameter {
                 key: eq("my-null"),
                 value: eq(&ActionParameterValue::Null)
-            }
-        )));
+            }))
+        );
     }
 
     #[cfg(feature = "serde")]
     #[rstest]
     fn test_deserialize_ActionParameter_with_bool_value() {
-
         let parameter = ActionParameter {
             key: String::from("my-bool"),
             value: ActionParameterValue::Boolean(true),
@@ -194,18 +204,18 @@ mod tests {
 
         assert_that!(to, ok(eq(json)));
 
-        assert_that!(from, ok(matches_pattern!(
-            ActionParameter {
+        assert_that!(
+            from,
+            ok(matches_pattern!(ActionParameter {
                 key: eq("my-bool"),
                 value: eq(&ActionParameterValue::Boolean(true))
-            }
-        )));
+            }))
+        );
     }
 
     #[cfg(feature = "serde")]
     #[rstest]
     fn test_deserialize_ActionParameter_with_integer_value() {
-
         let parameter = ActionParameter {
             key: String::from("my-integer"),
             value: ActionParameterValue::Integer(42),
@@ -218,18 +228,18 @@ mod tests {
 
         assert_that!(to, ok(eq(json)));
 
-        assert_that!(from, ok(matches_pattern!(
-            ActionParameter {
+        assert_that!(
+            from,
+            ok(matches_pattern!(ActionParameter {
                 key: eq("my-integer"),
                 value: eq(&ActionParameterValue::Integer(42))
-            }
-        )));
+            }))
+        );
     }
 
     #[cfg(feature = "serde")]
     #[rstest]
     fn test_deserialize_ActionParameter_with_float_value() {
-
         let parameter = ActionParameter {
             key: String::from("my-float"),
             value: ActionParameterValue::Float(42.73),
@@ -242,18 +252,18 @@ mod tests {
 
         assert_that!(to, ok(eq(json)));
 
-        assert_that!(from, ok(matches_pattern!(
-            ActionParameter {
+        assert_that!(
+            from,
+            ok(matches_pattern!(ActionParameter {
                 key: eq("my-float"),
                 value: eq(&ActionParameterValue::Float(42.73))
-            }
-        )));
+            }))
+        );
     }
 
     #[cfg(feature = "serde")]
     #[rstest]
     fn test_deserialize_ActionParameter_with_string_value() {
-
         let parameter = ActionParameter {
             key: String::from("my-string"),
             value: ActionParameterValue::String(String::from("Hello World")),
@@ -266,11 +276,35 @@ mod tests {
 
         assert_that!(to, ok(eq(json)));
 
-        assert_that!(from, ok(matches_pattern!(
-            ActionParameter {
+        assert_that!(
+            from,
+            ok(matches_pattern!(ActionParameter {
                 key: eq("my-string"),
                 value: eq(&ActionParameterValue::String(String::from("Hello World")))
-            }
-        )));
+            }))
+        );
+    }
+
+    #[cfg(feature = "serde")]
+    #[rstest]
+    fn test_clone_functionality() {
+        let parameter = ActionParameter {
+            key: String::from("test-key"),
+            value: ActionParameterValue::String(String::from("test-value")),
+        };
+
+        // Test Clone
+        let cloned_parameter = parameter.clone();
+        assert_eq!(parameter.key, cloned_parameter.key);
+
+        // Test Copy on enum
+        let blocking_type = BlockingType::Hard;
+        let copied_blocking_type = blocking_type; // Copy
+        let cloned_blocking_type = blocking_type.clone(); // Clone
+
+        // Verify they're all the same
+        assert!(matches!(blocking_type, BlockingType::Hard));
+        assert!(matches!(copied_blocking_type, BlockingType::Hard));
+        assert!(matches!(cloned_blocking_type, BlockingType::Hard));
     }
 }

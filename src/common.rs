@@ -6,8 +6,10 @@ pub type HeaderId = u64;
 pub type Timestamp = DateTime<Utc>;
 
 /// Current position of the AGV on the map. Optional: Can only be omitted for AGVs without the capability to localize themselves, e.g. line guided AGVs.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -27,12 +29,14 @@ pub struct AgvPosition {
     /// Describes the quality of the localization and therefore, can be used e.g. by SLAM-AGVs to describe how accurate the current position information is. 0.0: position unknown 1.0: position known Optional for vehicles that cannot estimate their localization score. Only for logging and visualization purposes
     pub localization_score: Option<f32>,
     /// Value for the deviation range of the position in meters. Optional for vehicles that cannot estimate their deviation e.g. grid-based localization. Only for logging and visualization purposes.
-    pub deviation_range: Option<f32>
+    pub deviation_range: Option<f32>,
 }
 
 /// This point describes the loads position on the AGV in the vehicle coordinates. The bounding_box_reference point is in the middle of the footprint of the load, so length/2 and width/2.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -44,11 +48,13 @@ pub struct BoundingBoxReference {
     /// z-coordinate of the point of reference.
     pub z: f32,
     /// Orientation of the loads bounding box. Important for tugger trains etc.
-    pub theta: Option<f32>
+    pub theta: Option<f32>,
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -60,12 +66,14 @@ pub struct ControlPoint {
     /// Range: (0..Infinity). The weight with which this control point pulls on the curve. When not defined, the default will be 1.0.
     pub weight: Option<f32>,
     /// Range: \[-pi..pi\]. Orientation of the AGV on this position of the curve. The orientation is in world coordinates. When not defined the orientation of the AGV will be tangential to the curve.
-    pub orientation: Option<f32>
+    pub orientation: Option<f32>,
 }
 
 /// Dimensions of the load's bounding box in meters.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -75,12 +83,14 @@ pub struct LoadDimensions {
     /// Absolute width of the loads bounding box in meter.
     pub width: f32,
     /// Absolute height of the loads bounding box in meter. Optional: Set value only if known.
-    pub height: Option<f32>
+    pub height: Option<f32>,
 }
 
 /// Node position. The object is defined in chapter 6.6. Optional: master control has this information. Can be sent additionally, e.g. for debugging purposes.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -102,12 +112,14 @@ pub struct NodePosition {
     /// the map of the target floor.
     pub map_id: String,
     /// Verbose description of the Map.
-    pub map_description: Option<String>
+    pub map_description: Option<String>,
 }
 
 /// The trajectory is to be communicated as a NURBS and is defined in chapter 6.4. Trajectory segments are from the point where the AGV starts to enter the edge until the point where it reports that the next node was traversed.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -117,12 +129,14 @@ pub struct Trajectory {
     /// Sequence of parameter values that determine where and how the control points affect the NURBS curve. knot_vector has size of number of control points + degree + 1
     pub knot_vector: Vec<f32>,
     /// List of JSON controlPoint objects defining the control points of the NURBS. This includes the start and end point.
-    pub control_points: Vec<ControlPoint>
+    pub control_points: Vec<ControlPoint>,
 }
 
 /// The AGVs velocity in vehicle coordinates.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -132,5 +146,5 @@ pub struct Velocity {
     /// The AGVs velocity in its y direction.
     pub vy: Option<f32>,
     /// The AGVs turning speed around its z axis.
-    pub omega: Option<f32>
+    pub omega: Option<f32>,
 }

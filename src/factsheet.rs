@@ -3,6 +3,7 @@ use alloc::vec::Vec;
 use crate::common::{BoundingBoxReference, HeaderId, LoadDimensions, Timestamp};
 
 /// The factsheet provides basic information about a specific AGV type series. This information allows comparison of different AGV types and can be applied for the planning, dimensioning and simulation of an AGV system. The factsheet also includes information about AGV communication interfaces which are required for the integration of an AGV type series into a VD[M]A-5050-compliant master control.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -36,6 +37,7 @@ pub struct Factsheet {
 }
 
 /// These parameters generally specify the class and the capabilities of the AGV.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -59,6 +61,7 @@ pub struct TypeSpecification {
 }
 
 /// Simplified description of AGV kinematics-type.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -72,6 +75,7 @@ pub enum AgvKinematic {
 }
 
 /// Simplified description of AGV class.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -84,6 +88,7 @@ pub enum AgvClass {
     Carrier
 }
 
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -98,6 +103,7 @@ pub enum LocalizationType {
     Grid
 }
 
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -110,6 +116,7 @@ pub enum NavigationType {
 }
 
 /// These parameters specify the basic physical properties of the AGV.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -135,6 +142,7 @@ pub struct PhysicalParameters {
 }
 
 /// This JSON-object describes the protocol limitations of the AGV. If a parameter is not defined or set to zero then there is no explicit limit for this parameter.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -150,6 +158,7 @@ pub struct ProtocolLimits {
 }
 
 /// Maximum lengths of strings
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -173,6 +182,7 @@ pub struct MaxStringLens {
 }
 
 /// Maximum lengths of arrays.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -230,6 +240,7 @@ pub struct MaxArrayLens {
 }
 
 /// Timing information.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -247,6 +258,7 @@ pub struct Timing {
 }
 
 /// Supported features of VDA5050 protocol
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -259,6 +271,7 @@ pub struct ProtocolFeatures {
     pub agv_actions: Vec<AgvAction>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -274,6 +287,7 @@ pub struct OptionalParameter {
 }
 
 /// Type of support for the optional parameter.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -286,6 +300,7 @@ pub enum Support {
     Required
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -304,6 +319,7 @@ pub struct AgvAction {
     pub result_description: Option<String>
 }
 
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -315,6 +331,7 @@ pub enum ActionScope {
     Edge
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -332,6 +349,7 @@ pub struct ActionParameter {
 }
 
 /// Data type of Value.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -348,6 +366,7 @@ pub enum ValueDataType {
 }
 
 /// Detailed definition of AGV geometry.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -361,6 +380,7 @@ pub struct AgvGeometry {
     pub envelopes3d: Vec<Envelopes3d>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -386,6 +406,7 @@ pub struct WheelDefinition {
 }
 
 /// Type of an AGV's wheel.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -398,6 +419,7 @@ pub enum WheelType {
     Mecanum
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -412,6 +434,7 @@ pub struct Position {
     pub theta: Option<f32>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -426,6 +449,7 @@ pub struct Envelopes2d {
     pub description: Option<String>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -438,6 +462,7 @@ pub struct PolygonPoint {
     pub y: f32
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -457,6 +482,7 @@ pub struct Envelopes3d {
 }
 
 /// 3D-envelope curve data, format specified in ‚format‘
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -465,6 +491,7 @@ pub struct Envelopes3d {
 pub struct Data;
 
 /// Abstract specification of load capabilities.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -477,6 +504,7 @@ pub struct LoadSpecification {
     pub load_sets: Vec<LoadSet>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),

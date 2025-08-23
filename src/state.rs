@@ -4,6 +4,7 @@ use alloc::vec::Vec;
 use crate::common::{AgvPosition, BoundingBoxReference, HeaderId, LoadDimensions, NodePosition, Timestamp, Trajectory, Velocity};
 
 /// All encompassing state of the AGV.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -62,6 +63,7 @@ pub struct State {
     pub safety_state: SafetyState
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -80,6 +82,7 @@ pub struct NodeState {
     pub released: bool
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -98,6 +101,7 @@ pub struct EdgeState {
     pub trajectory: Option<Trajectory>
 }
 
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -117,6 +121,7 @@ pub struct ActionState {
 }
 
 /// Status of an Action.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -138,6 +143,7 @@ pub enum ActionStatus {
 }
 
 /// Load object that describes the load if the AGV has information about it.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -159,6 +165,7 @@ pub struct Load {
 }
 
 /// Contains all battery-related information.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -178,6 +185,7 @@ pub struct BatteryState {
 }
 
 /// Current operating mode of the AGV. For additional information, see the table OperatingModes in chapter 6.10.6.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -192,6 +200,7 @@ pub enum OperatingMode {
 }
 
 /// An error object.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -209,6 +218,7 @@ pub struct Error {
 }
 
 /// Object that holds the error reference (e.g. order_id, order_update_id, action_id...) as key-value pairs.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -222,6 +232,7 @@ pub struct ErrorReference {
 }
 
 /// Error level.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -235,6 +246,7 @@ pub enum ErrorLevel {
 }
 
 /// An information object.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -252,6 +264,7 @@ pub struct Information {
 }
 
 /// Object that holds the info reference (e.g. order_id, order_update_id, action_id...) as key-value pairs.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -265,6 +278,7 @@ pub struct InfoReference {
 }
 
 /// Info level.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -278,6 +292,7 @@ pub enum InfoLevel {
 }
 
 /// Object that holds information about the safety status.
+#[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -291,6 +306,7 @@ pub struct SafetyState {
 }
 
 /// Acknowledge type of e_stop.
+#[derive(Clone, Copy)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
