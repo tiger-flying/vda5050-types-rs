@@ -114,9 +114,16 @@ pub mod v2_0 {
         pub use crate::state::OperatingMode as OperatingMode;
         pub use crate::state::SafetyState as SafetyState;
         pub use crate::state::State as State;
+        pub use crate::state::ActionStatus as ActionStatus;
     }
 
     pub mod visualization {
         pub use crate::visualization::Visualization;
+    }
+
+    pub mod action {
+        pub use crate::action::Action as Action;
+        pub use crate::action::ActionParameter as ActionParameter;
+        pub use crate::action::ActionParameterValue as ActionParameterValue;
     }
 }
