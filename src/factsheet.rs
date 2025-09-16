@@ -478,7 +478,7 @@ pub struct Envelopes3d {
     /// protocol and url-definition for downloading the 3D-envelope curve data e.g. ftp://xxx.yyy.com/ac4dgvhoif5tghji
     pub url: Option<String>,
     /// free text: description of envelope curve set
-    pub description: Option<f32>
+    pub description: Option<String>
 }
 
 /// 3D-envelope curve data, format specified in ‚format‘
@@ -521,7 +521,7 @@ pub struct LoadSet {
     pub bounding_box_reference: Option<BoundingBoxReference>,
     pub load_dimensions: Option<LoadDimensions>,
     /// maximum weight of loadtype
-    pub max_weigth: Option<f32>,
+    pub max_weight: Option<f32>,
     /// minimum allowed height for handling of this load-type and –weight. References to bounding_box_reference
     pub min_loadhandling_height: Option<f32>,
     /// maximum allowed height for handling of this load-type and –weight. references to bounding_box_reference
@@ -545,5 +545,5 @@ pub struct LoadSet {
     /// approx. time for dropping the load
     pub drop_time: Option<f32>,
     /// free text description of the load handling set
-    pub description: Option<f32>
+    pub description: Option<String>
 }

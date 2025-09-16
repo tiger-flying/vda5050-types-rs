@@ -177,11 +177,11 @@ pub struct BatteryState {
     /// Battery voltage
     pub battery_voltage: Option<f32>,
     /// State of health in percent as an integer within range [0..100]
-    pub battery_health: Option<u32>,
+    pub battery_health: Option<i8>,
     /// If true: Charging in progress. If false: AGV is currently not charging.
     pub charging: bool,
     /// Estimated reach with current State of Charge (in meter as uint32)
-    pub reach: Option<f32>
+    pub reach: Option<u32>
 }
 
 /// Current operating mode of the AGV. For additional information, see the table OperatingModes in chapter 6.10.6.
