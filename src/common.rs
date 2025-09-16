@@ -2,7 +2,7 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use chrono::{DateTime, Utc};
 
-pub type HeaderId = u64;
+pub type HeaderId = u32;
 pub type Timestamp = DateTime<Utc>;
 
 /// Current position of the AGV on the map. Optional: Can only be omitted for AGVs without the capability to localize themselves, e.g. line guided AGVs.
@@ -15,11 +15,11 @@ pub type Timestamp = DateTime<Utc>;
 )]
 pub struct AgvPosition {
     /// X-position on the map in reference to the map coordinate system. Precision is up to the specific implementation.
-    pub x: f32,
+    pub x: f64,
     /// Y-position on the map in reference to the map coordinate system. Precision is up to the specific implementation.
-    pub y: f32,
+    pub y: f64,
     /// Range: \[-pi..pi\] Orientation of the AGV.
-    pub theta: f32,
+    pub theta: f64,
     /// Unique identification of the map in which the position is referenced. Each map has the same origin of coordinates. When an AGV uses an elevator, e.g. leading from a departure floor to a target floor, it will disappear off the map of the departure floor and spawn in the related lift node on the map of the target floor.
     pub map_id: String,
     /// Additional information on the map.
@@ -27,9 +27,9 @@ pub struct AgvPosition {
     /// True if the AGVs position is initialized, false, if position is not initialized.
     pub position_initialized: bool,
     /// Describes the quality of the localization and therefore, can be used e.g. by SLAM-AGVs to describe how accurate the current position information is. 0.0: position unknown 1.0: position known Optional for vehicles that cannot estimate their localization score. Only for logging and visualization purposes
-    pub localization_score: Option<f32>,
+    pub localization_score: Option<f64>,
     /// Value for the deviation range of the position in meters. Optional for vehicles that cannot estimate their deviation e.g. grid-based localization. Only for logging and visualization purposes.
-    pub deviation_range: Option<f32>,
+    pub deviation_range: Option<f64>,
 }
 
 /// This point describes the loads position on the AGV in the vehicle coordinates. The bounding_box_reference point is in the middle of the footprint of the load, so length/2 and width/2.
@@ -42,13 +42,13 @@ pub struct AgvPosition {
 )]
 pub struct BoundingBoxReference {
     /// x-coordinate of the point of reference.
-    pub x: f32,
+    pub x: f64,
     /// y-coordinate of the point of reference.
-    pub y: f32,
+    pub y: f64,
     /// z-coordinate of the point of reference.
-    pub z: f32,
+    pub z: f64,
     /// Orientation of the loads bounding box. Important for tugger trains etc.
-    pub theta: Option<f32>,
+    pub theta: Option<f64>,
 }
 
 #[derive(Clone)]
@@ -60,13 +60,13 @@ pub struct BoundingBoxReference {
 )]
 pub struct ControlPoint {
     /// X coordinate described in the world coordinate system.
-    pub x: f32,
+    pub x: f64,
     /// Y coordinate described in the world coordinate system.
-    pub y: f32,
+    pub y: f64,
     /// Range: (0..Infinity). The weight with which this control point pulls on the curve. When not defined, the default will be 1.0.
-    pub weight: Option<f32>,
+    pub weight: Option<f64>,
     /// Range: \[-pi..pi\]. Orientation of the AGV on this position of the curve. The orientation is in world coordinates. When not defined the orientation of the AGV will be tangential to the curve.
-    pub orientation: Option<f32>,
+    pub orientation: Option<f64>,
 }
 
 /// Dimensions of the load's bounding box in meters.
@@ -79,11 +79,11 @@ pub struct ControlPoint {
 )]
 pub struct LoadDimensions {
     /// Absolute length of the loads bounding box in meter.
-    pub length: f32,
+    pub length: f64,
     /// Absolute width of the loads bounding box in meter.
-    pub width: f32,
+    pub width: f64,
     /// Absolute height of the loads bounding box in meter. Optional: Set value only if known.
-    pub height: Option<f32>,
+    pub height: Option<f64>,
 }
 
 /// Node position. The object is defined in chapter 6.6. Optional: master control has this information. Can be sent additionally, e.g. for debugging purposes.
@@ -96,15 +96,15 @@ pub struct LoadDimensions {
 )]
 pub struct NodePosition {
     /// X coordinate described in the world coordinate system.
-    pub x: f32,
+    pub x: f64,
     /// Y coordinate described in the world coordinate system.
-    pub y: f32,
+    pub y: f64,
     /// Range: \[-pi..pi\]. Orientation of the AGV on the node. Optional: vehicle can plan the path by itself. If defined, the AGV has to assume the theta angle on this node. If previous edge disallows rotation, the AGV is to rotate on the node. If following edge has a differing orientation defined but disallows rotation, the AGV is to rotate on the node to the edges desired rotation before entering the edge.
-    pub theta: Option<f32>,
+    pub theta: Option<f64>,
     /// Indicates how exact an AGV has to drive over a node in order for it to count as traversed. If = 0: no deviation is allowed (no deviation means within the normal tolerance of the AGV manufacturer). If > 0: allowed deviation-radius in meters. If the AGV passes a node within the deviation-radius, the node is considered to have been traversed.
-    pub allowed_deviation_xy: Option<f32>,
+    pub allowed_deviation_xy: Option<f64>,
     /// Indicates how big the deviation of theta angle can be. The lowest acceptable angle is theta - allowed_deviation_theta and the highest acceptable angle is theta + allowed_deviation_theta. If = 0: no deviation is allowed (no deviation means within the normal tolerance of the AGV manufacturer).
-    pub allowed_deviation_theta: Option<f32>,
+    pub allowed_deviation_theta: Option<f64>,
     /// Unique identification of the map in which the position is referenced.
     /// Each map has the same origin of coordinates. When an AGV uses an elevator,
     /// e.g. leading from a departure floor to a target floor, it will disappear
@@ -125,9 +125,9 @@ pub struct NodePosition {
 )]
 pub struct Trajectory {
     /// Defines the number of control points that influence any given point on the curve. Increasing the degree increases continuity. If not defined, the default value is 1.
-    pub degree: i64,
+    pub degree: f64,
     /// Sequence of parameter values that determine where and how the control points affect the NURBS curve. knot_vector has size of number of control points + degree + 1
-    pub knot_vector: Vec<f32>,
+    pub knot_vector: Vec<f64>,
     /// List of JSON controlPoint objects defining the control points of the NURBS. This includes the start and end point.
     pub control_points: Vec<ControlPoint>,
 }
@@ -142,9 +142,9 @@ pub struct Trajectory {
 )]
 pub struct Velocity {
     /// The AGVs velocity in its x direction.
-    pub vx: Option<f32>,
+    pub vx: Option<f64>,
     /// The AGVs velocity in its y direction.
-    pub vy: Option<f32>,
+    pub vy: Option<f64>,
     /// The AGVs turning speed around its z axis.
-    pub omega: Option<f32>,
+    pub omega: Option<f64>,
 }

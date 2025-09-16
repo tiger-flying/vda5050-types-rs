@@ -24,13 +24,13 @@ pub struct State {
     /// Unique order identification of the current order or the previous finished order. The order_id is kept until a new order is received. Empty string ("") if no previous order_id is available.
     pub order_id: String,
     /// Order Update Identification to identify that an order update has been accepted by the AGV. 0 if no previous order_update_id is available.
-    pub order_update_id: u64,
+    pub order_update_id: u32,
     /// Unique ID of the zone set that the AGV currently uses for path planning. Must be the same as the one used in the order, otherwise the AGV is to reject the order. Optional: If the AGV does not use zones, this field can be omitted.
     pub zone_set_id: Option<String>,
     /// nodeID of last reached node or, if AGV is currently on a node, current node (e. g. node7). Empty string ("") if no last_node_id is available.
     pub last_node_id: String,
     /// sequence_id of the last reached node or, if the AGV is currently on a node, sequence_id of current node. 0 if no last_node_sequence_id is available.
-    pub last_node_sequence_id: u64,
+    pub last_node_sequence_id: u32,
     /// True: indicates that the AGV is driving and/or rotating. Other movements of the AGV (e.g. lift movements) are not included here. False: indicates that the AGV is neither driving nor rotating driving: bool,
     pub driving: bool,
     /// True: AGV is currently in a paused state, either because of the push of a physical button on the AGV or because of an instantAction. The AGV can resume the order. False: The AGV is currently not in a paused state.
@@ -38,7 +38,7 @@ pub struct State {
     /// True: AGV is almost at the end of the base and will reduce speed if no new base is transmitted. Trigger for MC to send new base False: no base update required
     pub new_base_request: Option<bool>,
     /// Used by line guided vehicles to indicate the distance it has been driving past the last_node_id. Distance is in meters
-    pub distance_since_last_node: Option<f32>,
+    pub distance_since_last_node: Option<f64>,
     /// Current operating mode of the AGV. For additional information, see the table OperatingModes in chapter 6.10.6.
     pub operating_mode: OperatingMode,
     /// Information about the nodes the AGV still has to drive over. Empty list if idle.
@@ -73,7 +73,7 @@ pub struct NodeState {
     /// Unique node identification.
     pub node_id: String,
     /// Sequence id of the node.
-    pub sequence_id: u64,
+    pub sequence_id: u32,
     /// Verbose node description.
     pub node_description: Option<String>,
     /// Node position.
@@ -92,7 +92,7 @@ pub struct EdgeState {
     /// Unique edge identification.
     pub edge_id: String,
     /// sequence_id of the edge.
-    pub sequence_id: u64,
+    pub sequence_id: u32,
     /// Verbose Edge description
     pub edge_description: Option<String>,
     /// True: Edge is part of base. False: Edge is part of horizon.
@@ -161,7 +161,7 @@ pub struct Load {
     /// Dimensions of the load's bounding box in meters.
     pub load_dimensions: Option<LoadDimensions>,
     /// Weight of load in kg
-    pub weight: Option<f32>
+    pub weight: Option<f64>
 }
 
 /// Contains all battery-related information.
@@ -173,9 +173,9 @@ pub struct Load {
 )]
 pub struct BatteryState {
     /// State of Charge in percent as a float value: If AGV only provides values for good or bad battery levels, these will be indicated as 20% (bad) and 80% (good).
-    pub battery_charge: f32,
+    pub battery_charge: f64,
     /// Battery voltage
-    pub battery_voltage: Option<f32>,
+    pub battery_voltage: Option<f64>,
     /// State of health in percent as an integer within range [0..100]
     pub battery_health: Option<i8>,
     /// If true: Charging in progress. If false: AGV is currently not charging.

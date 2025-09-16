@@ -53,7 +53,7 @@ pub struct TypeSpecification {
     /// Simplified description of AGV class.
     pub agv_class: AgvClass,
     /// maximum loadable mass
-    pub max_load_mass: f32,
+    pub max_load_mass: f64,
     /// simplified description of localization type
     pub localization_types: Vec<LocalizationType>,
     /// List of path planning types supported by the AGV, sorted by priority
@@ -124,21 +124,21 @@ pub enum NavigationType {
 )]
 pub struct PhysicalParameters {
     /// minimal controlled continuous speed of the AGV
-    pub speed_min: f32,
+    pub speed_min: f64,
     /// maximum speed of the AGV
-    pub speed_max: f32,
+    pub speed_max: f64,
     /// maximum acceleration with maximum load
-    pub acceleration_max: f32,
+    pub acceleration_max: f64,
     /// maximum deceleration with maximum load
-    pub deceleration_max: f32,
+    pub deceleration_max: f64,
     /// minimum height of AGV
-    pub height_min: Option<f32>,
+    pub height_min: Option<f64>,
     /// maximum height of AGV
-    pub height_max: f32,
+    pub height_max: f64,
     /// width of AGV
-    pub width: f32,
+    pub width: f64,
     /// length of AGV
-    pub length: f32
+    pub length: f64
 }
 
 /// This JSON-object describes the protocol limitations of the AGV. If a parameter is not defined or set to zero then there is no explicit limit for this parameter.
@@ -247,13 +247,13 @@ pub struct MaxArrayLens {
     serde(rename_all = "camelCase")
 )]
 pub struct Timing {
-    /// minimum interval sending order messages to the AGV
+    /// minimum interval (in seconds) sending order messages to the AGV
     pub min_order_interval: f32,
-    /// minimum interval for sending state-messages
+    /// minimum interval (in seconds) for sending state-messages
     pub min_state_interval: f32,
-    /// default interval for sending state-messages if not defined, the default value from the main document is used
+    /// default interval (in seconds) for sending state-messages if not defined, the default value from the main document is used
     pub default_state_interval: Option<f32>,
-    /// default interval for sending messages on visualization topic
+    /// default interval (in seconds) for sending messages on visualization topic
     pub visualization_interval: Option<f32>
 }
 
@@ -396,11 +396,11 @@ pub struct WheelDefinition {
     pub is_active_steered: bool,
     pub position: Position,
     /// nominal diameter of wheel
-    pub diameter: f32,
+    pub diameter: f64,
     /// nominal width of wheel
-    pub width: f32,
-    /// nominal displacement of the wheel’s center to the rotation point (necessary for caster wheels). If the parameter is not defined, it is assumed to be 0
-    pub center_displacement: Option<f32>,
+    pub width: f64,
+    /// nominal displacement of the wheel's center to the rotation point (necessary for caster wheels). If the parameter is not defined, it is assumed to be 0
+    pub center_displacement: Option<f64>,
     /// free text: can be used by the manufacturer to define constraints
     pub constraints: Option<String>
 }
@@ -427,11 +427,11 @@ pub enum WheelType {
 )]
 pub struct Position {
     /// [m] x-position in AGV-coordinate system
-    pub x: f32,
+    pub x: f64,
     /// y-position in AGV-coordinate system
-    pub y: f32,
+    pub y: f64,
     /// orientation of wheel in AGV-coordinate system Necessary for fixed wheels
-    pub theta: Option<f32>
+    pub theta: Option<f64>
 }
 
 #[derive(Clone)]
@@ -457,9 +457,9 @@ pub struct Envelopes2d {
 )]
 pub struct PolygonPoint {
     /// x-position of polygon-point
-    pub x: f32,
+    pub x: f64,
     /// y-position of polygon-point
-    pub y: f32
+    pub y: f64
 }
 
 #[derive(Clone)]
@@ -521,29 +521,29 @@ pub struct LoadSet {
     pub bounding_box_reference: Option<BoundingBoxReference>,
     pub load_dimensions: Option<LoadDimensions>,
     /// maximum weight of loadtype
-    pub max_weight: Option<f32>,
+    pub max_weight: Option<f64>,
     /// minimum allowed height for handling of this load-type and –weight. References to bounding_box_reference
-    pub min_loadhandling_height: Option<f32>,
+    pub min_loadhandling_height: Option<f64>,
     /// maximum allowed height for handling of this load-type and –weight. references to bounding_box_reference
-    pub max_loadhandling_height: Option<f32>,
+    pub max_loadhandling_height: Option<f64>,
     /// minimum allowed depth for this load-type and –weight. references to bounding_box_reference
-    pub min_loadhandling_depth: Option<f32>,
+    pub min_loadhandling_depth: Option<f64>,
     /// maximum allowed depth for this load-type and –weight. references to bounding_box_reference
-    pub max_loadhandling_depth: Option<f32>,
+    pub max_loadhandling_depth: Option<f64>,
     /// minimum allowed tilt for this load-type and –weight
-    pub min_loadhandling_tilt: Option<f32>,
+    pub min_loadhandling_tilt: Option<f64>,
     /// maximum allowed tilt for this load-type and –weight
-    pub max_loadhandling_tilt: Option<f32>,
+    pub max_loadhandling_tilt: Option<f64>,
     /// maximum allowed speed for this load-type and –weight
-    pub agv_speed_limit: Option<f32>,
+    pub agv_speed_limit: Option<f64>,
     /// maximum allowed acceleration for this load-type and –weight
-    pub agv_acceleration_limit: Option<f32>,
+    pub agv_acceleration_limit: Option<f64>,
     /// maximum allowed deceleration for this load-type and –weight
-    pub agv_deceleration_limit: Option<f32>,
+    pub agv_deceleration_limit: Option<f64>,
     /// approx. time for picking up the load
-    pub pick_time: Option<f32>,
+    pub pick_time: Option<f64>,
     /// approx. time for dropping the load
-    pub drop_time: Option<f32>,
+    pub drop_time: Option<f64>,
     /// free text description of the load handling set
     pub description: Option<String>
 }
