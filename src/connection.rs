@@ -24,7 +24,7 @@ pub struct Connection {
 }
 
 /// Connection state.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),

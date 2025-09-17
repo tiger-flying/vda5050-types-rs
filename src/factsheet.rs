@@ -61,7 +61,7 @@ pub struct TypeSpecification {
 }
 
 /// Simplified description of AGV kinematics-type.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -75,7 +75,7 @@ pub enum AgvKinematic {
 }
 
 /// Simplified description of AGV class.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -88,7 +88,7 @@ pub enum AgvClass {
     Carrier
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -103,7 +103,7 @@ pub enum LocalizationType {
     Grid
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -287,7 +287,7 @@ pub struct OptionalParameter {
 }
 
 /// Type of support for the optional parameter.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -319,7 +319,7 @@ pub struct AgvAction {
     pub result_description: Option<String>
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -349,7 +349,7 @@ pub struct ActionParameter {
 }
 
 /// Data type of Value.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -406,7 +406,7 @@ pub struct WheelDefinition {
 }
 
 /// Type of an AGV's wheel.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),

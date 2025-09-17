@@ -24,7 +24,7 @@ pub struct Action {
 }
 
 /// Regulates if the action is allowed to be executed during movement and/or parallel to other actions.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(
     feature = "serde",

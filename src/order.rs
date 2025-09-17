@@ -98,7 +98,7 @@ pub struct Edge {
     pub actions: Vec<Action>
 }
 
-#[derive(Default, Clone, Copy)]
+#[derive(Default, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),

@@ -121,7 +121,7 @@ pub struct ActionState {
 }
 
 /// Status of an Action.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -185,7 +185,7 @@ pub struct BatteryState {
 }
 
 /// Current operating mode of the AGV. For additional information, see the table OperatingModes in chapter 6.10.6.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -232,7 +232,7 @@ pub struct ErrorReference {
 }
 
 /// Error level.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -278,7 +278,7 @@ pub struct InfoReference {
 }
 
 /// Info level.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
@@ -306,7 +306,7 @@ pub struct SafetyState {
 }
 
 /// Acknowledge type of e_stop.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
