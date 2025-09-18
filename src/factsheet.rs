@@ -152,7 +152,8 @@ pub struct PhysicalParameters {
     pub width: f64,
     /// length of AGV
     pub length: f64,
-    pub dockin_direction: Option<DockingDirection>,
+    /// goods at which side of the AGV when the AGV want to pick/drop the load
+    pub docking_direction: Option<DockingDirection>,
 }
 
 /// This JSON-object describes the protocol limitations of the AGV. If a parameter is not defined or set to zero then there is no explicit limit for this parameter.
