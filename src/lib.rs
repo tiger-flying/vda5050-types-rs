@@ -73,6 +73,7 @@ pub mod v2_0 {
         pub use crate::factsheet::MaxArrayLens as MaxArrayLens;
         pub use crate::factsheet::MaxStringLens as MaxStringLens;
         pub use crate::factsheet::NavigationType as NavigationType;
+        pub use crate::factsheet::DockingDirection as DockingDirection;
         pub use crate::factsheet::OptionalParameter as OptionalParameter;
         pub use crate::factsheet::PhysicalParameters as PhysicalParameters;
         pub use crate::factsheet::PolygonPoint as PolygonPoint;
