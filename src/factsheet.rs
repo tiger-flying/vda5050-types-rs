@@ -115,6 +115,19 @@ pub enum NavigationType {
     Autonomous
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "fmt", derive(Debug))]
+#[cfg_attr(feature = "serde",
+    derive(serde::Serialize, serde::Deserialize),
+    serde(rename_all = "SCREAMING_SNAKE_CASE")
+)]
+pub enum DockingDirection {
+    Front,
+    Back,
+    Left,
+    Right,
+}
+
 /// These parameters specify the basic physical properties of the AGV.
 #[derive(Clone)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -138,7 +151,8 @@ pub struct PhysicalParameters {
     /// width of AGV
     pub width: f64,
     /// length of AGV
-    pub length: f64
+    pub length: f64,
+    pub dockin_direction: Option<DockingDirection>,
 }
 
 /// This JSON-object describes the protocol limitations of the AGV. If a parameter is not defined or set to zero then there is no explicit limit for this parameter.
