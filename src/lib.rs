@@ -36,86 +36,86 @@ mod visualization;
 pub mod v2_0 {
 
     pub mod common {
-        pub use crate::action::Action as Action;
-        pub use crate::action::ActionParameter as ActionParameter;
-        pub use crate::action::BlockingType as BlockingType;
+        pub use crate::action::Action;
+        pub use crate::action::ActionParameter;
+        pub use crate::action::BlockingType;
 
-        pub use crate::common::AgvPosition as AgvPosition;
-        pub use crate::common::BoundingBoxReference as BoundingBoxReference;
-        pub use crate::common::ControlPoint as ControlPoint;
-        pub use crate::common::HeaderId as HeaderId;
-        pub use crate::common::LoadDimensions as LoadDimensions;
-        pub use crate::common::NodePosition as NodePosition;
-        pub use crate::common::Timestamp as Timestamp;
-        pub use crate::common::Trajectory as Trajectory;
-        pub use crate::common::Velocity as Velocity;
+        pub use crate::common::AgvPosition;
+        pub use crate::common::BoundingBoxReference;
+        pub use crate::common::ControlPoint;
+        pub use crate::common::HeaderId;
+        pub use crate::common::LoadDimensions;
+        pub use crate::common::NodePosition;
+        pub use crate::common::Timestamp;
+        pub use crate::common::Trajectory;
+        pub use crate::common::Velocity;
     }
 
     pub mod connection {
-        pub use crate::connection::Connection as Connection;
-        pub use crate::connection::ConnectionState as ConnectionState;
+        pub use crate::connection::Connection;
+        pub use crate::connection::ConnectionState;
     }
 
     pub mod factsheet {
-        pub use crate::factsheet::ActionParameter as ActionParameter;
-        pub use crate::factsheet::ActionScope as ActionScope;
-        pub use crate::factsheet::AgvAction as AgvAction;
-        pub use crate::factsheet::AgvClass as AgvClass;
-        pub use crate::factsheet::AgvGeometry as AgvGeometry;
-        pub use crate::factsheet::AgvKinematic as AgvKinematic;
-        pub use crate::factsheet::Data as Data;
-        pub use crate::factsheet::Envelopes2d as Envelopes2d;
-        pub use crate::factsheet::Envelopes3d as Envelopes3d;
-        pub use crate::factsheet::Factsheet as Factsheet;
-        pub use crate::factsheet::LoadSet as LoadSet;
-        pub use crate::factsheet::LoadSpecification as LoadSpecification;
-        pub use crate::factsheet::LocalizationType as LocalizationType;
-        pub use crate::factsheet::MaxArrayLens as MaxArrayLens;
-        pub use crate::factsheet::MaxStringLens as MaxStringLens;
-        pub use crate::factsheet::NavigationType as NavigationType;
-        pub use crate::factsheet::DockingDirection as DockingDirection;
-        pub use crate::factsheet::OptionalParameter as OptionalParameter;
-        pub use crate::factsheet::PhysicalParameters as PhysicalParameters;
-        pub use crate::factsheet::PolygonPoint as PolygonPoint;
-        pub use crate::factsheet::Position as Position;
-        pub use crate::factsheet::ProtocolFeatures as ProtocolFeatures;
-        pub use crate::factsheet::ProtocolLimits as ProtocolLimits;
-        pub use crate::factsheet::Support as Support;
-        pub use crate::factsheet::Timing as Timing;
-        pub use crate::factsheet::TypeSpecification as TypeSpecification;
-        pub use crate::factsheet::ValueDataType as ValueDataType;
-        pub use crate::factsheet::WheelDefinition as WheelDefinition;
-        pub use crate::factsheet::WheelType as WheelType;
+        pub use crate::factsheet::ActionParameter;
+        pub use crate::factsheet::ActionScope;
+        pub use crate::factsheet::AgvAction;
+        pub use crate::factsheet::AgvClass;
+        pub use crate::factsheet::AgvGeometry;
+        pub use crate::factsheet::AgvKinematic;
+        pub use crate::factsheet::Data;
+        pub use crate::factsheet::DockingDirection;
+        pub use crate::factsheet::Envelopes2d;
+        pub use crate::factsheet::Envelopes3d;
+        pub use crate::factsheet::Factsheet;
+        pub use crate::factsheet::LoadSet;
+        pub use crate::factsheet::LoadSpecification;
+        pub use crate::factsheet::LocalizationType;
+        pub use crate::factsheet::MaxArrayLens;
+        pub use crate::factsheet::MaxStringLens;
+        pub use crate::factsheet::NavigationType;
+        pub use crate::factsheet::OptionalParameter;
+        pub use crate::factsheet::PhysicalParameters;
+        pub use crate::factsheet::PolygonPoint;
+        pub use crate::factsheet::Position;
+        pub use crate::factsheet::ProtocolFeatures;
+        pub use crate::factsheet::ProtocolLimits;
+        pub use crate::factsheet::Support;
+        pub use crate::factsheet::Timing;
+        pub use crate::factsheet::TypeSpecification;
+        pub use crate::factsheet::ValueDataType;
+        pub use crate::factsheet::WheelDefinition;
+        pub use crate::factsheet::WheelType;
     }
 
     pub mod instant_actions {
-        pub use crate::instant_actions::InstantActions as InstantActions;
+        pub use crate::instant_actions::InstantActions;
     }
 
     pub mod order {
-        pub use crate::order::Edge as Edge;
-        pub use crate::order::Node as Node;
-        pub use crate::order::Order as Order;
-        pub use crate::order::OrientationType as OrientationType;
+        pub use crate::order::Edge;
+        pub use crate::order::Node;
+        pub use crate::order::Order;
+        pub use crate::order::OrientationType;
     }
 
     pub mod state {
-        pub use crate::state::ActionState as ActionState;
-        pub use crate::state::BatteryState as BatteryState;
-        pub use crate::state::EdgeState as EdgeState;
-        pub use crate::state::Error as Error;
-        pub use crate::state::ErrorReference as ErrorReference;
-        pub use crate::state::ErrorLevel as ErrorLevel;
-        pub use crate::state::EStop as EStop;
-        pub use crate::state::Information as Information;
-        pub use crate::state::InfoReference as InfoReference;
-        pub use crate::state::InfoLevel as InfoLevel;
-        pub use crate::state::Load as Load;
-        pub use crate::state::NodeState as NodeState;
-        pub use crate::state::OperatingMode as OperatingMode;
-        pub use crate::state::SafetyState as SafetyState;
-        pub use crate::state::State as State;
-        pub use crate::state::ActionStatus as ActionStatus;
+        pub use crate::state::ActionState;
+        pub use crate::state::ActionStatus;
+        pub use crate::state::BatteryState;
+        pub use crate::state::EStop;
+        pub use crate::state::EdgeState;
+        pub use crate::state::Error;
+        pub use crate::state::ErrorLevel;
+        pub use crate::state::ErrorReference;
+        pub use crate::state::InfoLevel;
+        pub use crate::state::InfoReference;
+        pub use crate::state::Information;
+        pub use crate::state::Load;
+        pub use crate::state::NodeState;
+        pub use crate::state::OperatingMode;
+        pub use crate::state::SafetyState;
+        pub use crate::state::State;
     }
 
     pub mod visualization {
@@ -123,8 +123,8 @@ pub mod v2_0 {
     }
 
     pub mod action {
-        pub use crate::action::Action as Action;
-        pub use crate::action::ActionParameter as ActionParameter;
-        pub use crate::action::ActionParameterValue as ActionParameterValue;
+        pub use crate::action::Action;
+        pub use crate::action::ActionParameter;
+        pub use crate::action::ActionParameterValue;
     }
 }
