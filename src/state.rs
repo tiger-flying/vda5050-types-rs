@@ -1,12 +1,16 @@
 use alloc::string::String;
 use alloc::vec::Vec;
 
-use crate::common::{AgvPosition, BoundingBoxReference, HeaderId, LoadDimensions, NodePosition, Timestamp, Trajectory, Velocity};
+use crate::common::{
+    AgvPosition, BoundingBoxReference, HeaderId, LoadDimensions, NodePosition, Timestamp,
+    Trajectory, Velocity,
+};
 
 /// All encompassing state of the AGV.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -60,12 +64,13 @@ pub struct State {
     /// Array of information objects. An empty array indicates that the AGV has no information. This should only be used for visualization or debugging – it must not be used for logic in master control. Objects are only for visualization/debugging. There's no specification when these objects are deleted.
     pub information: Vec<Information>,
     /// Object that holds information about the safety status
-    pub safety_state: SafetyState
+    pub safety_state: SafetyState,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -79,12 +84,13 @@ pub struct NodeState {
     /// Node position.
     pub node_position: Option<NodePosition>,
     /// True: indicates that the node is part of the base. False: indicates that the node is part of the horizon.
-    pub released: bool
+    pub released: bool,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -98,12 +104,13 @@ pub struct EdgeState {
     /// True: Edge is part of base. False: Edge is part of horizon.
     pub released: bool,
     /// The trajectory is to be communicated as a NURBS and is defined in chapter 6.4. Trajectory segments are from the point where the AGV starts to enter the edge until the point where it reports that the next node was traversed.
-    pub trajectory: Option<Trajectory>
+    pub trajectory: Option<Trajectory>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -117,13 +124,14 @@ pub struct ActionState {
     /// Action status. WAITING: Action was received by AGV but the node where it triggers was not yet reached or the edge where it is active was not yet entered. INITIALIZING: Action was triggered, preparatory measures are initiated. RUNNING: The action is running. PAUSED: The action is paused because of a pause instantAction or external trigger (pause button on AGV). FINISHED: The action is finished. A result is reported via the result_description. FAILED: Action could not be finished for whatever reason.
     pub action_status: ActionStatus,
     /// Description of the result, e.g. the result of a rfid-read.
-    pub result_description: Option<String>
+    pub result_description: Option<String>,
 }
 
 /// Status of an Action.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -139,13 +147,14 @@ pub enum ActionStatus {
     /// The action is finished. A result is reported via the resultDescription.
     Finished,
     /// Action could not be finished for whatever reason.
-    Failed
+    Failed,
 }
 
 /// Load object that describes the load if the AGV has information about it.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -161,13 +170,14 @@ pub struct Load {
     /// Dimensions of the load's bounding box in meters.
     pub load_dimensions: Option<LoadDimensions>,
     /// Weight of load in kg
-    pub weight: Option<f64>
+    pub weight: Option<f64>,
 }
 
 /// Contains all battery-related information.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -181,13 +191,14 @@ pub struct BatteryState {
     /// If true: Charging in progress. If false: AGV is currently not charging.
     pub charging: bool,
     /// Estimated reach with current State of Charge (in meter as uint32)
-    pub reach: Option<u32>
+    pub reach: Option<u32>,
 }
 
 /// Current operating mode of the AGV. For additional information, see the table OperatingModes in chapter 6.10.6.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -196,13 +207,14 @@ pub enum OperatingMode {
     Semiautomatic,
     Manual,
     Service,
-    Teachin
+    Teachin,
 }
 
 /// An error object.
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -214,13 +226,14 @@ pub struct Error {
     /// Verbose description of error.
     pub error_description: Option<String>,
     /// Error level.
-    pub error_level: ErrorLevel
+    pub error_level: ErrorLevel,
 }
 
 /// Object that holds the error reference (e.g. order_id, order_update_id, action_id...) as key-value pairs.
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -228,13 +241,14 @@ pub struct ErrorReference {
     /// References the type of reference (e. g. header_id, order_id, action_id, ...).
     pub reference_key: String,
     /// References the value, which belongs to the reference key.
-    pub reference_value: String
+    pub reference_value: String,
 }
 
 /// Error level.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -242,13 +256,14 @@ pub enum ErrorLevel {
     /// AGV is ready to start (e.g. maintenance cycle expiration warning).
     Warning,
     /// AGV is not in running condition, user intervention required (e.g. laser scanner is contaminated).
-    Fatal
+    Fatal,
 }
 
 /// An information object.
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -260,13 +275,14 @@ pub struct Information {
     /// Info description.
     pub info_description: Option<String>,
     /// Info level.
-    pub info_level: InfoLevel
+    pub info_level: InfoLevel,
 }
 
 /// Object that holds the info reference (e.g. order_id, order_update_id, action_id...) as key-value pairs.
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -274,13 +290,14 @@ pub struct InfoReference {
     /// References the type of reference (e.g. header_id, order_id, action_id, ...).
     pub reference_key: String,
     /// References the value, which belongs to the reference key.
-    pub reference_value: String
+    pub reference_value: String,
 }
 
 /// Info level.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -288,13 +305,14 @@ pub enum InfoLevel {
     /// Used for visualization.
     Info,
     /// Used for debugging.
-    Debug
+    Debug,
 }
 
 /// Object that holds information about the safety status.
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -302,13 +320,14 @@ pub struct SafetyState {
     /// Acknowledge type of e_stop.
     pub e_stop: EStop,
     /// Protective field violation. true: field is violated. false: field is not violated.
-    pub field_violation: bool
+    pub field_violation: bool,
 }
 
 /// Acknowledge type of e_stop.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -320,5 +339,5 @@ pub enum EStop {
     /// Facility e-stop has to be acknowledged remotely.
     Remote,
     /// No e-stop activated.
-    None
+    None,
 }

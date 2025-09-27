@@ -1,10 +1,11 @@
-use alloc::string::String;
 use crate::common::{AgvPosition, HeaderId, Timestamp, Velocity};
+use alloc::string::String;
 
 /// AGV position and/or velocity for visualization purposes. Can be published at a higher rate if wanted. Since bandwidth may be expensive depening on the update rate for this topic, all fields are optional.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -22,5 +23,5 @@ pub struct Visualization {
     /// Current position of the AGV on the map. Optional: Can only be omitted for AGVs without the capability to localize themselves, e.g. line guided AGVs.
     pub agv_position: Option<AgvPosition>,
     /// The AGVs velocity in vehicle coordinates.
-    pub velocity: Option<Velocity>
+    pub velocity: Option<Velocity>,
 }

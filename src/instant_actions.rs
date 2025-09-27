@@ -1,12 +1,13 @@
-use alloc::string::String;
-use alloc::vec::Vec;
 use crate::action::Action;
 use crate::common::{HeaderId, Timestamp};
+use alloc::string::String;
+use alloc::vec::Vec;
 
 /// Instant actions that the AGV is to execute as soon as they arrive.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -22,5 +23,5 @@ pub struct InstantActions {
     /// Serial number of the AGV
     pub serial_number: String,
     /// Array of actions that need to be performed immediately and are not part of the regular order.
-    pub actions: Vec<Action>
+    pub actions: Vec<Action>,
 }

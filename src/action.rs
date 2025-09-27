@@ -3,7 +3,7 @@ use alloc::string::String;
 use alloc::vec::Vec;
 
 /// Node Action Object
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(
     feature = "serde",
@@ -41,7 +41,7 @@ pub enum BlockingType {
 }
 
 /// ActionParameter Object
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(
     feature = "serde",
@@ -56,14 +56,13 @@ pub struct ActionParameter {
     pub value: ActionParameterValue,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(untagged)
 )]
-#[cfg_attr(test, derive(PartialEq))]
 pub enum ActionParameterValue {
     Null,
     Boolean(bool),
@@ -160,7 +159,7 @@ where
 #[cfg(test)]
 #[allow(non_snake_case)]
 mod tests {
-    use super::{ActionParameter, ActionParameterValue, BlockingType};
+    use super::{Action, ActionParameter, ActionParameterValue, BlockingType};
     use alloc::string::String;
     use googletest::prelude::*;
     use rstest::rstest;
@@ -306,5 +305,59 @@ mod tests {
         assert!(matches!(blocking_type, BlockingType::Hard));
         assert!(matches!(copied_blocking_type, BlockingType::Hard));
         assert!(matches!(cloned_blocking_type, BlockingType::Hard));
+    }
+
+    #[rstest]
+    fn test_partial_eq_functionality() {
+        // Test PartialEq for ActionParameterValue
+        let val1 = ActionParameterValue::Integer(42);
+        let val2 = ActionParameterValue::Integer(42);
+        let val3 = ActionParameterValue::Integer(43);
+
+        assert_eq!(val1, val2);
+        assert_ne!(val1, val3);
+
+        // Test PartialEq for ActionParameter
+        let param1 = ActionParameter {
+            key: String::from("test"),
+            value: ActionParameterValue::Boolean(true),
+        };
+        let param2 = ActionParameter {
+            key: String::from("test"),
+            value: ActionParameterValue::Boolean(true),
+        };
+        let param3 = ActionParameter {
+            key: String::from("test"),
+            value: ActionParameterValue::Boolean(false),
+        };
+
+        assert_eq!(param1, param2);
+        assert_ne!(param1, param3);
+
+        // Test PartialEq for Action
+        let action1 = Action {
+            action_type: String::from("move"),
+            action_id: String::from("1"),
+            action_description: None,
+            blocking_type: BlockingType::None,
+            action_parameters: vec![param1.clone()],
+        };
+        let action2 = Action {
+            action_type: String::from("move"),
+            action_id: String::from("1"),
+            action_description: None,
+            blocking_type: BlockingType::None,
+            action_parameters: vec![param2],
+        };
+
+        assert_eq!(action1, action2);
+
+        // Test Eq for BlockingType (enum)
+        let blocking1 = BlockingType::Hard;
+        let blocking2 = BlockingType::Hard;
+        let blocking3 = BlockingType::Soft;
+
+        assert_eq!(blocking1, blocking2);
+        assert_ne!(blocking1, blocking3);
     }
 }

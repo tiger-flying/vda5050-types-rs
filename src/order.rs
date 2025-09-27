@@ -5,9 +5,10 @@ use crate::action::Action;
 use crate::common::{HeaderId, NodePosition, Timestamp, Trajectory};
 
 /// An order to be communicated from master control to the AGV.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -31,12 +32,13 @@ pub struct Order {
     /// This list holds the base and the horizon nodes of the order graph.
     pub nodes: Vec<Node>,
     /// Base and Horizon Edges of the Order Graph.
-    pub edges: Vec<Edge>
+    pub edges: Vec<Edge>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -52,12 +54,13 @@ pub struct Node {
     /// Defines the position on a map in world coordinates. Each floor has its own map. Precision is up to the specific implementation.
     pub node_position: Option<NodePosition>,
     /// Array of actions that are to be executed on the node. Their sequence in the list governs their sequence of execution.
-    pub actions: Vec<Action>
+    pub actions: Vec<Action>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -95,12 +98,13 @@ pub struct Edge {
     /// Trajectory JSON-object for this edge as a NURBS. Defines the curve on which the AGV should move between startNode and endNode. Optional: Can be omitted if AGV cannot process trajectories or if AGV plans its own trajectory.
     pub trajectory: Option<Trajectory>,
     /// Array of action objects with detailed information.
-    pub actions: Vec<Action>
+    pub actions: Vec<Action>,
 }
 
 #[derive(Default, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -109,5 +113,5 @@ pub enum OrientationType {
     Global,
     /// Tangential to the edge.
     #[default]
-    Tangential
+    Tangential,
 }

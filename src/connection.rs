@@ -1,10 +1,11 @@
-use alloc::string::String;
 use crate::common::{HeaderId, Timestamp};
+use alloc::string::String;
 
 /// AGV connection state reported as a last will message. Has to be sent with retain flag. Once the AGV comes online, it has to send this message on its connect topic, with the connection_state enum set to "ONLINE". The last will message is to be configured with the connection state set to "CONNECTIONBROKEN". Thus, if the AGV disconnects from the broker, master control gets notified via the topic "connection". If the AGV is disconnecting in an orderly fashion (e.g. shutting down, sleeping), the AGV is to publish a message on this topic with the connection_state set to "OFFLINE".
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -20,13 +21,14 @@ pub struct Connection {
     /// Serial number of the AGV
     pub serial_number: String,
     /// Connection state.
-    pub connection_state: ConnectionState
+    pub connection_state: ConnectionState,
 }
 
 /// Connection state.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -36,5 +38,5 @@ pub enum ConnectionState {
     /// The Connection between AGV and broker has gone offline in a coordinated way.
     Offline,
     /// The connection between AGV and broker has unexpectedly ended.
-    ConnectionBroken
+    ConnectionBroken,
 }

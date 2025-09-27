@@ -1,11 +1,12 @@
+use crate::common::{BoundingBoxReference, HeaderId, LoadDimensions, Timestamp};
 use alloc::string::String;
 use alloc::vec::Vec;
-use crate::common::{BoundingBoxReference, HeaderId, LoadDimensions, Timestamp};
 
 /// The factsheet provides basic information about a specific AGV type series. This information allows comparison of different AGV types and can be applied for the planning, dimensioning and simulation of an AGV system. The factsheet also includes information about AGV communication interfaces which are required for the integration of an AGV type series into a VD[M]A-5050-compliant master control.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -33,13 +34,14 @@ pub struct Factsheet {
     /// Abstract specification of load capabilities
     pub load_specification: Option<LoadSpecification>,
     /// Detailed specification of localization
-    pub localization_parameters: Option<u64>
+    pub localization_parameters: Option<u64>,
 }
 
 /// These parameters generally specify the class and the capabilities of the AGV.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -57,13 +59,14 @@ pub struct TypeSpecification {
     /// simplified description of localization type
     pub localization_types: Vec<LocalizationType>,
     /// List of path planning types supported by the AGV, sorted by priority
-    pub navigation_types: Vec<NavigationType>
+    pub navigation_types: Vec<NavigationType>,
 }
 
 /// Simplified description of AGV kinematics-type.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -71,13 +74,14 @@ pub enum AgvKinematic {
     Diff,
     Omni,
     #[cfg_attr(feature = "serde", serde(rename = "THREEWHEEL"))]
-    ThreeWheel
+    ThreeWheel,
 }
 
 /// Simplified description of AGV class.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -85,12 +89,13 @@ pub enum AgvClass {
     Forklift,
     Conveyor,
     Tugger,
-    Carrier
+    Carrier,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -100,24 +105,26 @@ pub enum LocalizationType {
     Rfid,
     Dmc,
     Spot,
-    Grid
+    Grid,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
 pub enum NavigationType {
     PhysicalLindeGuided,
     VirtualLineGuided,
-    Autonomous
+    Autonomous,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -129,9 +136,10 @@ pub enum DockingDirection {
 }
 
 /// These parameters specify the basic physical properties of the AGV.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -157,9 +165,10 @@ pub struct PhysicalParameters {
 }
 
 /// This JSON-object describes the protocol limitations of the AGV. If a parameter is not defined or set to zero then there is no explicit limit for this parameter.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -169,13 +178,14 @@ pub struct ProtocolLimits {
     /// maximum lengths of arrays
     pub max_array_lens: MaxArrayLens,
     /// timing information
-    pub timing: Timing
+    pub timing: Timing,
 }
 
 /// Maximum lengths of strings
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -193,13 +203,14 @@ pub struct MaxStringLens {
     /// maximum length of ENUM- and Key-Strings. Affected parameters: action.actionType, action.blockingType, edge.direction, actionParameter.key, state.operatingMode, load.loadPosition, load.loadType, actionState.actionStatus, error.errorType, error.errorLevel, errorReference.referenceKey, info.infoType, info.infoLevel, safetyState.eStop, connection.connectionState
     pub enum_len: Option<u64>,
     /// maximum length of loadId Strings
-    pub load_id_len: Option<u64>
+    pub load_id_len: Option<u64>,
 }
 
 /// Maximum lengths of arrays.
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -255,9 +266,10 @@ pub struct MaxArrayLens {
 }
 
 /// Timing information.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -269,13 +281,14 @@ pub struct Timing {
     /// default interval (in seconds) for sending state-messages if not defined, the default value from the main document is used
     pub default_state_interval: Option<f32>,
     /// default interval (in seconds) for sending messages on visualization topic
-    pub visualization_interval: Option<f32>
+    pub visualization_interval: Option<f32>,
 }
 
 /// Supported features of VDA5050 protocol
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -283,12 +296,13 @@ pub struct ProtocolFeatures {
     /// list of supported and/or required optional parameters. Optional parameters, that are not listed here, are assumed to be not supported by the AGV.
     pub optional_parameters: Vec<OptionalParameter>,
     /// list of all actions with parameters supported by this AGV. This includes standard actions specified in VDA5050 and manufacturer-specific actions
-    pub agv_actions: Vec<AgvAction>
+    pub agv_actions: Vec<AgvAction>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -298,13 +312,14 @@ pub struct OptionalParameter {
     /// type of support for the optional parameter, the following values are possible: SUPPORTED: optional parameter is supported like specified. REQUIRED: optional parameter is required for proper AGV-operation.
     pub support: Support,
     /// free text. Description of optional parameter. E.g. Reason, why the optional parameter ‚direction‘ is necessary for this AGV-type and which values it can contain. The parameter ‘nodeMarker’ must contain unsigned interger-numbers only. Nurbs-Support is limited to straight lines and circle segments.
-    pub description: Option<String>
+    pub description: Option<String>,
 }
 
 /// Type of support for the optional parameter.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -312,12 +327,13 @@ pub enum Support {
     /// Optional parameter is supported like specified.
     Supported,
     /// Optional parameter is required for proper AGV-operation.
-    Required
+    Required,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -331,24 +347,26 @@ pub struct AgvAction {
     /// list of parameters. if not defined, the action has no parameters
     pub action_parameters: Vec<ActionParameter>,
     /// free text: description of the resultDescription
-    pub result_description: Option<String>
+    pub result_description: Option<String>,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
 pub enum ActionScope {
     Instant,
     Node,
-    Edge
+    Edge,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -360,13 +378,14 @@ pub struct ActionParameter {
     /// free text: description of the parameter
     pub description: Option<String>,
     /// True: optional parameter
-    pub is_optional: Option<bool>
+    pub is_optional: Option<bool>,
 }
 
 /// Data type of Value.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -377,13 +396,14 @@ pub enum ValueDataType {
     Float,
     String,
     Object,
-    Array
+    Array,
 }
 
 /// Detailed definition of AGV geometry.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -392,19 +412,20 @@ pub struct AgvGeometry {
     pub wheel_definitions: Vec<WheelDefinition>,
     pub envelopes2d: Vec<Envelopes2d>,
     /// list of AGV-envelope curves in 3D (german: „Hüllkurven“)
-    pub envelopes3d: Vec<Envelopes3d>
+    pub envelopes3d: Vec<Envelopes3d>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
 pub struct WheelDefinition {
     /// wheel type.
     #[cfg_attr(feature = "serde", serde(rename = "type"))]
-    pub  wheel_type: WheelType,
+    pub wheel_type: WheelType,
     /// True: wheel is actively driven (de: angetrieben)
     pub is_active_driven: bool,
     /// True: wheel is actively steered (de: aktiv gelenkt)
@@ -417,13 +438,14 @@ pub struct WheelDefinition {
     /// nominal displacement of the wheel's center to the rotation point (necessary for caster wheels). If the parameter is not defined, it is assumed to be 0
     pub center_displacement: Option<f64>,
     /// free text: can be used by the manufacturer to define constraints
-    pub constraints: Option<String>
+    pub constraints: Option<String>,
 }
 
 /// Type of an AGV's wheel.
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "SCREAMING_SNAKE_CASE")
 )]
@@ -431,12 +453,13 @@ pub enum WheelType {
     Drive,
     Caster,
     Fixed,
-    Mecanum
+    Mecanum,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -446,12 +469,13 @@ pub struct Position {
     /// y-position in AGV-coordinate system
     pub y: f64,
     /// orientation of wheel in AGV-coordinate system Necessary for fixed wheels
-    pub theta: Option<f64>
+    pub theta: Option<f64>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -461,12 +485,13 @@ pub struct Envelopes2d {
     /// envelope curve as a x/y-polygon polygon is assumed as closed and must be non-self-intersecting
     pub polygon_points: Vec<PolygonPoint>,
     /// free text: description of envelope curve set
-    pub description: Option<String>
+    pub description: Option<String>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -474,12 +499,13 @@ pub struct PolygonPoint {
     /// x-position of polygon-point
     pub x: f64,
     /// y-position of polygon-point
-    pub y: f64
+    pub y: f64,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -493,22 +519,24 @@ pub struct Envelopes3d {
     /// protocol and url-definition for downloading the 3D-envelope curve data e.g. ftp://xxx.yyy.com/ac4dgvhoif5tghji
     pub url: Option<String>,
     /// free text: description of envelope curve set
-    pub description: Option<String>
+    pub description: Option<String>,
 }
 
-/// 3D-envelope curve data, format specified in ‚format‘
-#[derive(Clone)]
+/// 3D-envelope curve data, format specified in ‚format'
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
 pub struct Data;
 
 /// Abstract specification of load capabilities.
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -516,12 +544,13 @@ pub struct LoadSpecification {
     /// list of load positions / load handling devices. This lists contains the valid values for the oarameter “state.loads[].loadPosition” and for the action parameter “lhd” of the actions pick and drop. If this list doesn’t exist or is empty, the AGV has no load handling device.
     pub load_positions: Vec<String>,
     /// list of load-sets that can be handled by the AGV
-    pub load_sets: Vec<LoadSet>
+    pub load_sets: Vec<LoadSet>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(feature = "serde",
+#[cfg_attr(
+    feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
@@ -560,5 +589,5 @@ pub struct LoadSet {
     /// approx. time for dropping the load
     pub drop_time: Option<f64>,
     /// free text description of the load handling set
-    pub description: Option<String>
+    pub description: Option<String>,
 }
