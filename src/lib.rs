@@ -37,17 +37,19 @@ pub mod v2_0 {
 
     pub mod common {
         pub use crate::action::Action;
-        pub use crate::action::ActionParameter;
         pub use crate::action::BlockingType;
 
+        pub use crate::common::ActionParameter;
         pub use crate::common::AgvPosition;
         pub use crate::common::BoundingBoxReference;
         pub use crate::common::ControlPoint;
         pub use crate::common::HeaderId;
         pub use crate::common::LoadDimensions;
         pub use crate::common::NodePosition;
+        pub use crate::common::ParameterValue;
         pub use crate::common::Timestamp;
         pub use crate::common::Trajectory;
+        pub use crate::common::ValueDataType;
         pub use crate::common::Velocity;
     }
 
@@ -57,7 +59,6 @@ pub mod v2_0 {
     }
 
     pub mod factsheet {
-        pub use crate::factsheet::ActionParameter;
         pub use crate::factsheet::ActionScope;
         pub use crate::factsheet::AgvAction;
         pub use crate::factsheet::AgvClass;
@@ -83,7 +84,6 @@ pub mod v2_0 {
         pub use crate::factsheet::Support;
         pub use crate::factsheet::Timing;
         pub use crate::factsheet::TypeSpecification;
-        pub use crate::factsheet::ValueDataType;
         pub use crate::factsheet::WheelDefinition;
         pub use crate::factsheet::WheelType;
     }
@@ -124,7 +124,5 @@ pub mod v2_0 {
 
     pub mod action {
         pub use crate::action::Action;
-        pub use crate::action::ActionParameter;
-        pub use crate::action::ActionParameterValue;
     }
 }

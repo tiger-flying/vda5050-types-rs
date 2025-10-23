@@ -1,4 +1,4 @@
-use crate::common::{BoundingBoxReference, HeaderId, LoadDimensions, Timestamp};
+use crate::common::{ActionParameter, BoundingBoxReference, HeaderId, LoadDimensions, Timestamp};
 use alloc::string::String;
 use alloc::vec::Vec;
 
@@ -361,42 +361,6 @@ pub enum ActionScope {
     Instant,
     Node,
     Edge,
-}
-
-#[derive(Clone, PartialEq)]
-#[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize),
-    serde(rename_all = "camelCase")
-)]
-pub struct ActionParameter {
-    /// key-String for Parameter
-    pub key: String,
-    /// data type of Value, possible data types are: BOOL, NUMBER, INTEGER, FLOAT, STRING, OBJECT, ARRAY
-    pub value_data_type: ValueDataType,
-    /// free text: description of the parameter
-    pub description: Option<String>,
-    /// True: optional parameter
-    pub is_optional: Option<bool>,
-}
-
-/// Data type of Value.
-#[derive(Clone, Copy, PartialEq, Eq)]
-#[cfg_attr(feature = "fmt", derive(Debug))]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize),
-    serde(rename_all = "SCREAMING_SNAKE_CASE")
-)]
-pub enum ValueDataType {
-    Bool,
-    Number,
-    Integer,
-    Float,
-    String,
-    Object,
-    Array,
 }
 
 /// Detailed definition of AGV geometry.
