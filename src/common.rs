@@ -112,7 +112,7 @@ pub struct NodePosition {
     /// Range: \[-pi..pi\]. Orientation of the AGV on the node. Optional: vehicle can plan the path by itself. If defined, the AGV has to assume the theta angle on this node. If previous edge disallows rotation, the AGV is to rotate on the node. If following edge has a differing orientation defined but disallows rotation, the AGV is to rotate on the node to the edges desired rotation before entering the edge.
     pub theta: Option<f64>,
     /// Indicates how exact an AGV has to drive over a node in order for it to count as traversed. If = 0: no deviation is allowed (no deviation means within the normal tolerance of the AGV manufacturer). If > 0: allowed deviation-radius in meters. If the AGV passes a node within the deviation-radius, the node is considered to have been traversed.
-    pub allowed_deviation_xy: Option<f64>,
+    pub allowed_deviation_x_y: Option<f64>,
     /// Indicates how big the deviation of theta angle can be. The lowest acceptable angle is theta - allowed_deviation_theta and the highest acceptable angle is theta + allowed_deviation_theta. If = 0: no deviation is allowed (no deviation means within the normal tolerance of the AGV manufacturer).
     pub allowed_deviation_theta: Option<f64>,
     /// Unique identification of the map in which the position is referenced.
