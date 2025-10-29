@@ -2,6 +2,9 @@ use crate::common::{ActionParameter, ParameterValue};
 use alloc::string::String;
 use alloc::vec::Vec;
 
+#[cfg(feature = "serde")]
+use serde_with::skip_serializing_none;
+
 /// Node Action Object
 #[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -10,6 +13,7 @@ use alloc::vec::Vec;
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Action {
     ///  Name of action as described in the first column of "Actions and Parameters" Identifies the function of the action.
     pub action_type: String,

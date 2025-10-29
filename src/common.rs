@@ -4,6 +4,9 @@ use alloc::vec::Vec;
 use chrono::{DateTime, Utc};
 use core::fmt::Write;
 
+#[cfg(feature = "serde")]
+use serde_with::skip_serializing_none;
+
 pub type HeaderId = u32;
 pub type Timestamp = DateTime<Utc>;
 
@@ -15,6 +18,7 @@ pub type Timestamp = DateTime<Utc>;
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct AgvPosition {
     /// X-position on the map in reference to the map coordinate system. Precision is up to the specific implementation.
     pub x: f64,
@@ -42,6 +46,7 @@ pub struct AgvPosition {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct BoundingBoxReference {
     /// x-coordinate of the point of reference.
     pub x: f64,
@@ -60,6 +65,7 @@ pub struct BoundingBoxReference {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct ControlPoint {
     /// X coordinate described in the world coordinate system.
     pub x: f64,
@@ -79,6 +85,7 @@ pub struct ControlPoint {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct LoadDimensions {
     /// Absolute length of the loads bounding box in meter.
     pub length: f64,
@@ -96,6 +103,7 @@ pub struct LoadDimensions {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct NodePosition {
     /// X coordinate described in the world coordinate system.
     pub x: f64,
@@ -125,6 +133,7 @@ pub struct NodePosition {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Trajectory {
     /// Defines the number of control points that influence any given point on the curve. Increasing the degree increases continuity. If not defined, the default value is 1.
     pub degree: f64,
@@ -142,6 +151,7 @@ pub struct Trajectory {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Velocity {
     /// The AGVs velocity in its x direction.
     pub vx: Option<f64>,
@@ -159,6 +169,7 @@ pub struct Velocity {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct ActionParameter {
     /// key-String for Parameter
     pub key: String,

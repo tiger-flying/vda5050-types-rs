@@ -1,6 +1,9 @@
 use crate::common::{AgvPosition, HeaderId, Timestamp, Velocity};
 use alloc::string::String;
 
+#[cfg(feature = "serde")]
+use serde_with::skip_serializing_none;
+
 /// AGV position and/or velocity for visualization purposes. Can be published at a higher rate if wanted. Since bandwidth may be expensive depening on the update rate for this topic, all fields are optional.
 #[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -9,6 +12,7 @@ use alloc::string::String;
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Visualization {
     /// header_id of the message. The header_id is defined per topic and incremented by 1 with each sent (but not necessarily received) message.
     pub header_id: HeaderId,

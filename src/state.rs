@@ -6,6 +6,9 @@ use crate::common::{
     Trajectory, Velocity,
 };
 
+#[cfg(feature = "serde")]
+use serde_with::skip_serializing_none;
+
 /// All encompassing state of the AGV.
 #[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -14,6 +17,7 @@ use crate::common::{
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct State {
     /// header_id of the message. The header_id is defined per topic and incremented by 1 with each sent (but not necessarily received) message.
     pub header_id: HeaderId,
@@ -74,6 +78,7 @@ pub struct State {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct NodeState {
     /// Unique node identification.
     pub node_id: String,
@@ -94,6 +99,7 @@ pub struct NodeState {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct EdgeState {
     /// Unique edge identification.
     pub edge_id: String,
@@ -114,6 +120,7 @@ pub struct EdgeState {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct ActionState {
     /// Unique action_id, e.g. blink_123jdaimoim234
     pub action_id: String,
@@ -158,6 +165,7 @@ pub enum ActionStatus {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Load {
     /// Unique identification number of the load (e. g. barcode or RFID) Empty field if the AGV can identify the load but didn't identify the load yet. Optional if the AGV has cannot identify the load.
     pub load_id: Option<String>,
@@ -181,6 +189,7 @@ pub struct Load {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct BatteryState {
     /// State of Charge in percent as a float value: If AGV only provides values for good or bad battery levels, these will be indicated as 20% (bad) and 80% (good).
     pub battery_charge: f64,
@@ -218,6 +227,7 @@ pub enum OperatingMode {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Error {
     /// Type / name of error.
     pub error_type: String,
@@ -237,6 +247,7 @@ pub struct Error {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct ErrorReference {
     /// References the type of reference (e. g. header_id, order_id, action_id, ...).
     pub reference_key: String,
@@ -267,6 +278,7 @@ pub enum ErrorLevel {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Information {
     /// Type / name of information.
     pub info_type: String,
@@ -286,6 +298,7 @@ pub struct Information {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct InfoReference {
     /// References the type of reference (e.g. header_id, order_id, action_id, ...).
     pub reference_key: String,
@@ -316,6 +329,7 @@ pub enum InfoLevel {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct SafetyState {
     /// Acknowledge type of e_stop.
     pub e_stop: EStop,

@@ -3,6 +3,9 @@ use crate::common::{HeaderId, Timestamp};
 use alloc::string::String;
 use alloc::vec::Vec;
 
+#[cfg(feature = "serde")]
+use serde_with::skip_serializing_none;
+
 /// Instant actions that the AGV is to execute as soon as they arrive.
 #[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -11,6 +14,7 @@ use alloc::vec::Vec;
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct InstantActions {
     /// header_id of the message. The header_id is defined per topic and incremented by 1 with each sent (but not necessarily received) message.
     pub header_id: HeaderId,

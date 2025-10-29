@@ -4,6 +4,9 @@ use alloc::vec::Vec;
 use crate::action::Action;
 use crate::common::{HeaderId, NodePosition, Timestamp, Trajectory};
 
+#[cfg(feature = "serde")]
+use serde_with::skip_serializing_none;
+
 /// An order to be communicated from master control to the AGV.
 #[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -12,6 +15,7 @@ use crate::common::{HeaderId, NodePosition, Timestamp, Trajectory};
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Order {
     /// header_id of the message. The header_id is defined per topic and incremented by 1 with each sent (but not necessarily received) message.
     pub header_id: HeaderId,
@@ -42,6 +46,7 @@ pub struct Order {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Node {
     /// Unique node identification. For example: pumpenhaus_1, MONTAGE
     pub node_id: String,
@@ -64,6 +69,7 @@ pub struct Node {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Edge {
     /// Unique edge identification
     pub edge_id: String,

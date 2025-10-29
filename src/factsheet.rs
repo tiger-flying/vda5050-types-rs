@@ -2,6 +2,9 @@ use crate::common::{ActionParameter, BoundingBoxReference, HeaderId, LoadDimensi
 use alloc::string::String;
 use alloc::vec::Vec;
 
+#[cfg(feature = "serde")]
+use serde_with::skip_serializing_none;
+
 /// The factsheet provides basic information about a specific AGV type series. This information allows comparison of different AGV types and can be applied for the planning, dimensioning and simulation of an AGV system. The factsheet also includes information about AGV communication interfaces which are required for the integration of an AGV type series into a VD[M]A-5050-compliant master control.
 #[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -10,6 +13,7 @@ use alloc::vec::Vec;
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Factsheet {
     /// header_id of the message. The header_id is defined per topic and incremented by 1 with each sent (but not necessarily received) message.
     pub header_id: HeaderId,
@@ -45,6 +49,7 @@ pub struct Factsheet {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct TypeSpecification {
     /// Free text generalized series name as specified by manufacturer
     pub series_name: String,
@@ -143,6 +148,7 @@ pub enum DockingDirection {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct PhysicalParameters {
     /// minimal controlled continuous speed of the AGV
     pub speed_min: f64,
@@ -172,6 +178,7 @@ pub struct PhysicalParameters {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct ProtocolLimits {
     /// maximum lengths of strings
     pub max_string_lens: MaxStringLens,
@@ -189,6 +196,7 @@ pub struct ProtocolLimits {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct MaxStringLens {
     /// maximum MQTT Message length
     pub msg_len: Option<u64>,
@@ -214,6 +222,7 @@ pub struct MaxStringLens {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct MaxArrayLens {
     /// Maximum number of nodes per order processable by the AGV
     #[cfg_attr(feature = "serde", serde(rename = "order.nodes"))]
@@ -273,6 +282,7 @@ pub struct MaxArrayLens {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Timing {
     /// minimum interval (in seconds) sending order messages to the AGV
     pub min_order_interval: f32,
@@ -292,6 +302,7 @@ pub struct Timing {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct ProtocolFeatures {
     /// list of supported and/or required optional parameters. Optional parameters, that are not listed here, are assumed to be not supported by the AGV.
     pub optional_parameters: Vec<OptionalParameter>,
@@ -306,6 +317,7 @@ pub struct ProtocolFeatures {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct OptionalParameter {
     /// full name of optional parameter, e.g. “order.nodes.nodePosition.allowedDeviationTheta”
     pub parameter: String,
@@ -337,6 +349,7 @@ pub enum Support {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct AgvAction {
     /// unique actionType corresponding to action.actionType
     pub action_type: String,
@@ -371,6 +384,7 @@ pub enum ActionScope {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct AgvGeometry {
     /// list of wheels, containing wheel-arrangement and geometry
     pub wheel_definitions: Vec<WheelDefinition>,
@@ -386,6 +400,7 @@ pub struct AgvGeometry {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct WheelDefinition {
     /// wheel type.
     #[cfg_attr(feature = "serde", serde(rename = "type"))]
@@ -427,6 +442,7 @@ pub enum WheelType {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Position {
     /// [m] x-position in AGV-coordinate system
     pub x: f64,
@@ -443,6 +459,7 @@ pub struct Position {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Envelopes2d {
     /// name of the envelope curve set
     pub set: String,
@@ -459,6 +476,7 @@ pub struct Envelopes2d {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct PolygonPoint {
     /// x-position of polygon-point
     pub x: f64,
@@ -473,6 +491,7 @@ pub struct PolygonPoint {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct Envelopes3d {
     /// name of the envelope curve set
     pub set: String,
@@ -504,6 +523,7 @@ pub struct Data;
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct LoadSpecification {
     /// list of load positions / load handling devices. This lists contains the valid values for the oarameter “state.loads[].loadPosition” and for the action parameter “lhd” of the actions pick and drop. If this list doesn’t exist or is empty, the AGV has no load handling device.
     pub load_positions: Vec<String>,
@@ -518,6 +538,7 @@ pub struct LoadSpecification {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "camelCase")
 )]
+#[cfg_attr(feature = "serde", skip_serializing_none)]
 pub struct LoadSet {
     /// Unique name of the load set, e.g. DEFAULT, SET1, ...
     pub set_name: String,
