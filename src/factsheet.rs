@@ -140,6 +140,22 @@ pub enum DockingDirection {
     Right,
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "fmt", derive(Debug))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize),
+    serde(rename_all = "SCREAMING_SNAKE_CASE")
+)]
+pub enum ChargeDirection {
+    Front,
+    Back,
+    Left,
+    Right,
+    Bottom,
+    Top,
+}
+
 /// These parameters specify the basic physical properties of the AGV.
 #[derive(Clone, PartialEq)]
 #[cfg_attr(feature = "fmt", derive(Debug))]
@@ -168,6 +184,8 @@ pub struct PhysicalParameters {
     pub length: f64,
     /// goods at which side of the AGV when the AGV want to pick/drop the load
     pub docking_direction: Option<DockingDirection>,
+    /// charging contact direction of the AGV
+    pub charge_dir: Option<ChargeDirection>,
 }
 
 /// This JSON-object describes the protocol limitations of the AGV. If a parameter is not defined or set to zero then there is no explicit limit for this parameter.

@@ -64,6 +64,7 @@ pub mod v2_0 {
         pub use crate::factsheet::AgvClass;
         pub use crate::factsheet::AgvGeometry;
         pub use crate::factsheet::AgvKinematic;
+        pub use crate::factsheet::ChargeDirection;
         pub use crate::factsheet::Data;
         pub use crate::factsheet::DockingDirection;
         pub use crate::factsheet::Envelopes2d;
